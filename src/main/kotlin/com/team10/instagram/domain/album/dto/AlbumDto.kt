@@ -1,6 +1,11 @@
 package com.team10.instagram.domain.album.dto
 
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
+
 data class AlbumCreateRequest(
+    @field:NotBlank(message = "앨범 제목은 필수입니다.")
+    @field:Size(max = 50, message = "앨범 제목은 50자를 초과할 수 없습니다.")
     val title: String,
 )
 
@@ -20,4 +25,6 @@ data class AlbumDetailResponse(
 data class AlbumPostDto(
     val postId: Long,
     val imageUrl: String,
+    val likeCount: Int,
+    val commentCount: Int,
 )

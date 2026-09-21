@@ -1,7 +1,10 @@
 package com.team10.instagram.global.common
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 // 모든 응답은 이 껍데기로 감싸서 나갑니다.
 data class ApiResponse<T>(
+    @get:JsonProperty("isSuccess")
     val isSuccess: Boolean,
     val code: String,
     val message: String,
@@ -15,7 +18,7 @@ data class ApiResponse<T>(
                 // 성공 여부 (Boolean)
                 isSuccess = true,
                 // 응답 코드 (String)
-                code = "200",
+                code = "SUCCESS",
                 // 메시지 (String)
                 message = "요청에 성공하였습니다.",
                 // 실제 들어갈 데이터 (Generic)
@@ -32,6 +35,19 @@ data class ApiResponse<T>(
                 code = code,
                 message = message,
                 data = null,
+            )
+
+        // 유효성 검사 실패 시
+        fun <T> onFailure(
+            code: String,
+            message: String,
+            data: T,
+        ): ApiResponse<T> =
+            ApiResponse(
+                isSuccess = false,
+                code = code,
+                message = message,
+                data = data,
             )
     }
 }
